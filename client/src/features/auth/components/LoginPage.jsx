@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.jsx';
+import GoogleSignInButton from './GoogleSignInButton.jsx';
 
 function LoginPage() {
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,6 +23,23 @@ function LoginPage() {
       setStatus('error');
     }
   }
+
+  const handleGoogleCredential = useCallback(
+    async (idToken) => {
+      setStatus('loading');
+      setError(null);
+      try {
+        await loginWithGoogle(idToken);
+        navigate('/select-car', { replace: true });
+      } catch (err) {
+        setError(err.message);
+        setStatus('error');
+      }
+    },
+    [loginWithGoogle, navigate]
+  );
+
+  const handleGoogleError = useCallback((message) => setError(message), []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
@@ -57,6 +75,17 @@ function LoginPage() {
             {status === 'loading' ? 'Logging in...' : 'Log In'}
           </button>
         </form>
+
+        <div className="my-4 flex items-center gap-2">
+          <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+          <span className="text-xs text-gray-400 dark:text-gray-500">OR</span>
+          <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+        </div>
+
+        <div className="flex justify-center">
+          <GoogleSignInButton onCredential={handleGoogleCredential} onError={handleGoogleError} />
+        </div>
+
         <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
           No account?{' '}
           <Link to="/signup" className="text-gray-900 dark:text-white font-medium underline">

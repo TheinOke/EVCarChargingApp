@@ -32,6 +32,15 @@ export function AuthProvider({ children }) {
     [applySession]
   );
 
+  const loginWithGoogle = useCallback(
+    async (idToken) => {
+      const result = await authApi.loginWithGoogle(idToken);
+      applySession(result);
+      return result;
+    },
+    [applySession]
+  );
+
   const logout = useCallback(() => {
     persistToken(null);
     setTokenState(null);
@@ -39,7 +48,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, user, signup, login, logout }}>
+    <AuthContext.Provider value={{ token, user, signup, login, loginWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   );

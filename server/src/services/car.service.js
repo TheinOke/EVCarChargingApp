@@ -1,18 +1,7 @@
 import * as carRepository from '../repositories/car.repository.js';
-import { MOCK_CAR_DEFAULTS } from '../seed/data/testUser.data.js';
 
-async function ensureAtLeastOneCar(userId) {
-  const existing = await carRepository.findAllByUserId(userId);
-  if (existing.length > 0) {
-    return existing;
-  }
-
-  const created = await carRepository.create(userId, MOCK_CAR_DEFAULTS);
-  return [created];
-}
-
-export async function listCarsForUser(userId) {
-  return ensureAtLeastOneCar(userId);
+export function listCarsForUser(userId) {
+  return carRepository.findAllByUserId(userId);
 }
 
 export function createCar(userId, fields) {

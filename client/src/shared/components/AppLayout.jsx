@@ -33,14 +33,12 @@ function AppLayout() {
           Map
         </NavLink>
         <div className="ml-auto flex items-center gap-3">
-          {activeCar && (
-            <button
-              onClick={() => navigate('/select-car')}
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
-            >
-              {activeCar.make} {activeCar.model} &middot; Change car
-            </button>
-          )}
+          <button
+            onClick={() => navigate('/select-car?manage=true')}
+            className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+          >
+            {activeCar ? `${activeCar.make} ${activeCar.model} · Change car` : 'Add a car'}
+          </button>
           <button
             onClick={toggle}
             className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"

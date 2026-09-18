@@ -19,3 +19,16 @@ export async function login(req, res) {
     res.status(err.status || 500).json({ message: err.message || 'Login failed' });
   }
 }
+
+export async function googleLogin(req, res) {
+  try {
+    const { idToken } = req.body;
+    if (!idToken) {
+      return res.status(400).json({ message: 'idToken is required' });
+    }
+    const result = await authService.loginWithGoogle(idToken);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(err.status || 500).json({ message: err.message || 'Google login failed' });
+  }
+}

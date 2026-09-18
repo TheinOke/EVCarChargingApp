@@ -13,3 +13,10 @@ export function login({ email, password }) {
     body: JSON.stringify({ email, password }),
   });
 }
+
+export function loginWithGoogle(idToken) {
+  return apiFetch('/api/auth/google', {
+    method: 'POST',
+    body: JSON.stringify({ idToken }),
+  });
+}

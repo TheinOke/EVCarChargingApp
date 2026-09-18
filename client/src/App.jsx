@@ -19,11 +19,13 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/select-car" element={<SelectCarPage />} />
 
-          <Route element={<RequireActiveCar />}>
-            <Route element={<AppLayout />}>
-              <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route element={<AppLayout />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="/map" element={<MapPage />} />
+
+            {/* Only the Dashboard needs a selected car (for charge-estimate calls) */}
+            <Route element={<RequireActiveCar />}>
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/map" element={<MapPage />} />
             </Route>
           </Route>
         </Route>
