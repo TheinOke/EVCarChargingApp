@@ -5,6 +5,7 @@ import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { DEFAULT_COORDS } from '../../../shared/lib/geolocation.js';
+import QueueButton from '../../queue/components/QueueButton.jsx';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -77,6 +78,9 @@ function StationMap({ stations, userCoords, radiusKm, zoom = 13, showRadiusCircl
             {station.address}
             <br />
             ${station.pricePerKwh.toFixed(2)}/kWh &middot; {station.availablePorts}/{station.totalPorts} ports available
+            <div className="mt-2">
+              <QueueButton stationId={station.id} initialCount={station.queueCount} />
+            </div>
           </Popup>
         </Marker>
       ))}

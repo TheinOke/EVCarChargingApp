@@ -1,4 +1,5 @@
 import { formatOperatingHours } from '../lib/operatingHours.js';
+import QueueButton from '../../queue/components/QueueButton.jsx';
 
 function StationList({ stations, highlightConnectorType, selectedStationId, onSelectStation }) {
   return (
@@ -51,6 +52,9 @@ function StationList({ stations, highlightConnectorType, selectedStationId, onSe
                 >
                   {station.availablePorts}/{station.totalPorts} available
                 </p>
+                <div className="mt-2">
+                  <QueueButton stationId={station.id} initialCount={station.queueCount} />
+                </div>
               </div>
             </div>
           </div>
