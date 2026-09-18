@@ -12,6 +12,10 @@ export function findById(id) {
   return Station.findById(id);
 }
 
+export function findAll() {
+  return Station.find();
+}
+
 export function findNear({ lat, lng, radiusKm }) {
   const geoNearStage = {
     near: { type: 'Point', coordinates: [lng, lat] },

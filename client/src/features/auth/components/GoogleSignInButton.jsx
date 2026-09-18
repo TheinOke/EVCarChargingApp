@@ -24,10 +24,13 @@ function GoogleSignInButton({ onCredential, onError }) {
       });
 
       if (buttonRef.current) {
+        // Size to the actual available width (capped at Google's 400px max)
+        // instead of a hardcoded value, so it never overflows on narrow phones.
+        const width = Math.min(400, buttonRef.current.offsetWidth || 300);
         window.google.accounts.id.renderButton(buttonRef.current, {
           theme: 'outline',
           size: 'large',
-          width: 300,
+          width,
         });
       }
     }
@@ -49,7 +52,7 @@ function GoogleSignInButton({ onCredential, onError }) {
     }
   }, [onCredential, onError]);
 
-  return <div ref={buttonRef} />;
+  return <div ref={buttonRef} className="w-full flex justify-center" />;
 }
 
 export default GoogleSignInButton;

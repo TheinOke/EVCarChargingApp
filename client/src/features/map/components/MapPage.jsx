@@ -49,8 +49,8 @@ function MapPage() {
   }, [baseStations, connectorType, time, township]);
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Nearby Charging Stations</h1>
+    <div className="max-w-4xl mx-auto px-4 py-6 sm:p-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6">Nearby Charging Stations</h1>
 
       {status === 'loading' && (
         <p className="text-gray-500 dark:text-gray-400">Locating you and finding nearby stations...</p>
@@ -70,7 +70,7 @@ function MapPage() {
 
       {status === 'success' && (
         <>
-          <div className="flex gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4">
             {TABS.map((t) => (
               <button
                 key={t.key}
@@ -129,7 +129,7 @@ function MapPage() {
           </div>
 
           {selectedStation && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 mb-4 flex items-center justify-between text-sm">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 mb-4 flex flex-wrap items-center justify-between gap-2 text-sm">
               {routeStatus === 'loading' && (
                 <span className="text-gray-500 dark:text-gray-400">
                   Finding route to {selectedStation.name}...
@@ -146,7 +146,7 @@ function MapPage() {
               )}
               <button
                 onClick={() => setSelectedStation(null)}
-                className="text-gray-500 dark:text-gray-400 underline ml-3"
+                className="text-gray-500 dark:text-gray-400 underline"
               >
                 Clear route
               </button>

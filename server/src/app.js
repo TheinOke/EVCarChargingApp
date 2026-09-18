@@ -5,7 +5,7 @@ import authRoutes from './routes/auth.routes.js';
 import carRoutes from './routes/car.routes.js';
 import stationRoutes from './routes/station.routes.js';
 import chargeEstimateRoutes from './routes/chargeEstimate.routes.js';
-import queueRoutes from './routes/queue.routes.js';
+import chargingHistoryRoutes from './routes/chargingHistory.routes.js';
 
 const app = express();
 
@@ -17,6 +17,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/cars', carRoutes);
 app.use('/api/stations', stationRoutes);
 app.use('/api/charge-estimate', chargeEstimateRoutes);
-app.use('/api/queue', queueRoutes);
+app.use('/api/charging-history', chargingHistoryRoutes);
 
 export default app;

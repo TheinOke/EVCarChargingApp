@@ -8,6 +8,7 @@ import SignupPage from './features/auth/components/SignupPage.jsx';
 import SelectCarPage from './features/cars/components/SelectCarPage.jsx';
 import DashboardPage from './features/dashboard/components/DashboardPage.jsx';
 import MapPage from './features/map/components/MapPage.jsx';
+import HistoryPage from './features/history/components/HistoryPage.jsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="/select-car" element={<SelectCarPage />} />
             <Route path="/map" element={<MapPage />} />
+            <Route path="/history" element={<HistoryPage />} />
 
             {/* Only the Dashboard needs a selected car (for charge-estimate calls) */}
             <Route element={<RequireActiveCar />}>

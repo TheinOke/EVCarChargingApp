@@ -2,13 +2,14 @@ import { useDashboardData } from '../hooks/useDashboardData.js';
 import CarInfoCard from './CarInfoCard.jsx';
 import BatteryStatusCard from './BatteryStatusCard.jsx';
 import CostEstimateCard from './CostEstimateCard.jsx';
+import RecentHistoryCard from '../../history/components/RecentHistoryCard.jsx';
 
 function DashboardPage() {
   const { car, estimate, status, error, retry } = useDashboardData();
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Dashboard</h1>
+    <div className="max-w-4xl mx-auto px-4 py-6 sm:p-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6">Dashboard</h1>
 
       {status === 'loading' && <p className="text-gray-500 dark:text-gray-400">Loading your car data...</p>}
 
@@ -31,6 +32,10 @@ function DashboardPage() {
           <CostEstimateCard estimate={estimate} />
         </div>
       )}
+
+      <div className="mt-8">
+        <RecentHistoryCard />
+      </div>
     </div>
   );
 }

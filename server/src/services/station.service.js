@@ -1,15 +1,14 @@
 import * as stationRepository from '../repositories/station.repository.js';
-import * as queueRepository from '../repositories/queue.repository.js';
 import { MOCK_STATIONS } from '../seed/data/stations.data.js';
 
-async function ensureSeeded() {
+export async function ensureSeeded() {
   const count = await stationRepository.countAll();
   if (count === 0) {
     await stationRepository.insertMany(MOCK_STATIONS);
   }
 }
 
-function toPublicStation(station, queueCountByStationId) {
+function toPublicStation(station) {
   return {
     id: station._id,
     name: station.name,
@@ -23,18 +22,11 @@ function toPublicStation(station, queueCountByStationId) {
     totalPorts: station.totalPorts,
     availablePorts: station.availablePorts,
     distanceKm: station.distanceMeters / 1000,
-    queueCount: queueCountByStationId.get(station._id.toString()) || 0,
   };
 }
 
 export async function getNearbyStations({ lat, lng, radiusKm }) {
   await ensureSeeded();
-  const [stations, queueCounts] = await Promise.all([
-    stationRepository.findNear({ lat, lng, radiusKm }),
-    queueRepository.countAllGroupedByStation(),
-  ]);
-
-  const queueCountByStationId = new Map(queueCounts.map((entry) => [entry._id.toString(), entry.count]));
-
-  return stations.map((station) => toPublicStation(station, queueCountByStationId));
+  const stations = await stationRepository.findNear({ lat, lng, radiusKm });
+  return stations.map(toPublicStation);
 }

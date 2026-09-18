@@ -6,6 +6,7 @@ function CarInfoCard({ car }) {
         {car.make} {car.model}
       </p>
       <p className="mt-1 text-gray-500 dark:text-gray-400">{car.batteryCapacityKwh} kWh battery capacity</p>
+      <p className="mt-1 text-gray-500 dark:text-gray-400">{car.connectorType} connector</p>
     </div>
   );
 }

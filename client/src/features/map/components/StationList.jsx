@@ -1,5 +1,4 @@
 import { formatOperatingHours } from '../lib/operatingHours.js';
-import QueueButton from '../../queue/components/QueueButton.jsx';
 
 function StationList({ stations, highlightConnectorType, selectedStationId, onSelectStation }) {
   return (
@@ -19,9 +18,9 @@ function StationList({ stations, highlightConnectorType, selectedStationId, onSe
               isSelected ? 'ring-2 ring-teal-600' : ''
             }`}
           >
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+            <div className="flex flex-wrap justify-between items-start gap-2">
+              <div className="min-w-0">
+                <p className="font-semibold text-gray-900 dark:text-white flex items-center gap-2 flex-wrap">
                   {station.name}
                   {isCompatible && (
                     <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300">
@@ -43,8 +42,8 @@ function StationList({ stations, highlightConnectorType, selectedStationId, onSe
                   {formatOperatingHours(station.operatingHours)}
                 </p>
               </div>
-              <div className="text-right">
-                <p className="font-semibold text-gray-900 dark:text-white">${station.pricePerKwh.toFixed(2)}/kWh</p>
+              <div className="text-right shrink-0">
+                <p className="font-semibold text-gray-900 dark:text-white">{Math.round(station.pricePerKwh).toLocaleString()} MMK/kWh</p>
                 <p
                   className={`text-sm ${
                     station.availablePorts === 0 ? 'text-red-500' : 'text-green-600'
@@ -52,9 +51,6 @@ function StationList({ stations, highlightConnectorType, selectedStationId, onSe
                 >
                   {station.availablePorts}/{station.totalPorts} available
                 </p>
-                <div className="mt-2">
-                  <QueueButton stationId={station.id} initialCount={station.queueCount} />
-                </div>
               </div>
             </div>
           </div>
