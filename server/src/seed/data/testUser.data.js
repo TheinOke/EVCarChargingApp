@@ -4,6 +4,7 @@ export const MOCK_CAR_DEFAULTS = {
   batteryCapacityKwh: 60,
   currentBatteryPercent: 42,
   chargingPowerKw: 11,
+  connectorType: 'CCS',
 };
 
 const SECOND_MOCK_CAR = {
@@ -12,6 +13,7 @@ const SECOND_MOCK_CAR = {
   batteryCapacityKwh: 40,
   currentBatteryPercent: 68,
   chargingPowerKw: 6.6,
+  connectorType: 'CHAdeMO',
 };
 
 // Multiple cars for the test user, to exercise multi-car scenarios (selection UI, etc.)

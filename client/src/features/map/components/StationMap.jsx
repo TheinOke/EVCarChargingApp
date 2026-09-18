@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Circle, CircleMarker, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, CircleMarker, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -24,7 +24,18 @@ function MapViewUpdater({ center, zoom }) {
   return null;
 }
 
-function StationMap({ stations, userCoords, radiusKm, zoom = 13, showRadiusCircle = true }) {
+// Zooms/pans to fit the route once it's fetched, so both endpoints are visible.
+function RouteBoundsFitter({ coordinates }) {
+  const map = useMap();
+  useEffect(() => {
+    if (coordinates && coordinates.length > 0) {
+      map.fitBounds(coordinates, { padding: [40, 40] });
+    }
+  }, [map, coordinates]);
+  return null;
+}
+
+function StationMap({ stations, userCoords, radiusKm, zoom = 13, showRadiusCircle = true, route }) {
   const center = userCoords
     ? [userCoords.lat, userCoords.lng]
     : stations.length > 0
@@ -69,6 +80,13 @@ function StationMap({ stations, userCoords, radiusKm, zoom = 13, showRadiusCircl
           </Popup>
         </Marker>
       ))}
+
+      {route && (
+        <>
+          <Polyline positions={route.coordinates} pathOptions={{ color: '#1798ee', weight: 4 }} />
+          <RouteBoundsFitter coordinates={route.coordinates} />
+        </>
+      )}
     </MapContainer>
   );
 }

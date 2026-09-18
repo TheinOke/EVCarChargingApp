@@ -13,6 +13,8 @@ function toPublicStation(station) {
     id: station._id,
     name: station.name,
     address: station.address,
+    township: station.township,
+    operatingHours: station.operatingHours,
     lat: station.location.coordinates[1],
     lng: station.location.coordinates[0],
     connectorTypes: station.connectorTypes,

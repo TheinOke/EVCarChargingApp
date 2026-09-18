@@ -3,7 +3,15 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as carsApi from '../api/carsApi.js';
 import { useActiveCar } from '../hooks/useActiveCar.jsx';
 
-const EMPTY_FORM = { make: '', model: '', batteryCapacityKwh: '', currentBatteryPercent: '', chargingPowerKw: '' };
+const CONNECTOR_TYPES = ['Type2', 'CCS', 'CHAdeMO'];
+const EMPTY_FORM = {
+  make: '',
+  model: '',
+  batteryCapacityKwh: '',
+  currentBatteryPercent: '',
+  chargingPowerKw: '',
+  connectorType: CONNECTOR_TYPES[0],
+};
 
 function SelectCarPage() {
   const navigate = useNavigate();
@@ -64,6 +72,7 @@ function SelectCarPage() {
         batteryCapacityKwh: parseFloat(form.batteryCapacityKwh),
         currentBatteryPercent: parseFloat(form.currentBatteryPercent),
         chargingPowerKw: parseFloat(form.chargingPowerKw),
+        connectorType: form.connectorType,
       });
 
       if (cars.length === 0) {
@@ -126,6 +135,22 @@ function SelectCarPage() {
         onChange={(e) => setForm({ ...form, chargingPowerKw: e.target.value })}
         className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2"
       />
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Connector type
+        </label>
+        <select
+          value={form.connectorType}
+          onChange={(e) => setForm({ ...form, connectorType: e.target.value })}
+          className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-3 py-2"
+        >
+          {CONNECTOR_TYPES.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
       {addStatus === 'error' && <p className="text-sm text-red-600">{addError}</p>}
       <div className="flex gap-2">
         <button
@@ -198,7 +223,8 @@ function SelectCarPage() {
                   )}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {car.currentBatteryPercent}% battery &middot; {car.batteryCapacityKwh} kWh capacity
+                  {car.currentBatteryPercent}% battery &middot; {car.batteryCapacityKwh} kWh capacity &middot;{' '}
+                  {car.connectorType}
                 </p>
               </button>
             ))}

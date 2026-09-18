@@ -4,6 +4,12 @@ const stationSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     address: { type: String, required: true },
+    township: { type: String, required: true },
+    operatingHours: {
+      open24h: { type: Boolean, required: true, default: false },
+      openTime: { type: String }, // "HH:MM", same-day range only
+      closeTime: { type: String }, // "HH:MM"
+    },
     location: {
       type: { type: String, enum: ['Point'], required: true, default: 'Point' },
       coordinates: { type: [Number], required: true }, // [lng, lat]

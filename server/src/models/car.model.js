@@ -8,6 +8,7 @@ const carSchema = new mongoose.Schema(
     batteryCapacityKwh: { type: Number, required: true },
     currentBatteryPercent: { type: Number, required: true, min: 0, max: 100 },
     chargingPowerKw: { type: Number, required: true },
+    connectorType: { type: String, enum: ['Type2', 'CCS', 'CHAdeMO'], required: true },
   },
   { timestamps: true }
 );

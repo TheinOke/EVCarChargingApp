@@ -1,10 +1,14 @@
 // Coordinates approximate Pyay Rd / Mayangone Township, Yangon (near Frontiir HQ,
 // 33 Pyay Rd) for local testing of "nearby stations" — not pinpoint-accurate to
 // the exact building, per the approximate coords the user confirmed using.
+// `township` for the non-Yangon stations is the city name, since we don't have
+// sub-township-level detail for those.
 export const MOCK_STATIONS = [
   {
     name: 'Pyay Road Charge Hub',
     address: '33 Pyay Rd, Mayangone Township, Yangon',
+    township: 'Mayangone',
+    operatingHours: { open24h: true },
     location: { type: 'Point', coordinates: [96.145, 16.86] },
     connectorTypes: ['Type2', 'CCS'],
     pricePerKwh: 0.32,
@@ -14,6 +18,8 @@ export const MOCK_STATIONS = [
   {
     name: 'Mayangone EV Station',
     address: 'Ward 5, Mayangone Township, Yangon',
+    township: 'Mayangone',
+    operatingHours: { open24h: false, openTime: '06:00', closeTime: '22:00' },
     location: { type: 'Point', coordinates: [96.1495, 16.863] },
     connectorTypes: ['CCS'],
     pricePerKwh: 0.29,
@@ -23,6 +29,8 @@ export const MOCK_STATIONS = [
   {
     name: 'Myaynigone Power Point',
     address: 'Myaynigone Junction, Yangon',
+    township: 'Sanchaung',
+    operatingHours: { open24h: false, openTime: '07:00', closeTime: '23:00' },
     location: { type: 'Point', coordinates: [96.14, 16.855] },
     connectorTypes: ['Type2', 'CHAdeMO'],
     pricePerKwh: 0.35,
@@ -32,6 +40,8 @@ export const MOCK_STATIONS = [
   {
     name: 'Kamayut Fast Charge',
     address: 'Kamayut Township, Yangon',
+    township: 'Kamayut',
+    operatingHours: { open24h: true },
     location: { type: 'Point', coordinates: [96.135, 16.85] },
     connectorTypes: ['CCS'],
     pricePerKwh: 0.4,
@@ -43,6 +53,8 @@ export const MOCK_STATIONS = [
   {
     name: 'Mandalay City Charge Point',
     address: 'Mandalay, Mandalay Region',
+    township: 'Mandalay',
+    operatingHours: { open24h: false, openTime: '06:00', closeTime: '21:00' },
     location: { type: 'Point', coordinates: [96.084, 21.983] },
     connectorTypes: ['Type2', 'CCS'],
     pricePerKwh: 0.3,
@@ -52,6 +64,8 @@ export const MOCK_STATIONS = [
   {
     name: 'Naypyidaw Central Charging',
     address: 'Naypyidaw Union Territory',
+    township: 'Naypyidaw',
+    operatingHours: { open24h: true },
     location: { type: 'Point', coordinates: [96.13, 19.745] },
     connectorTypes: ['CCS', 'CHAdeMO'],
     pricePerKwh: 0.31,
@@ -61,6 +75,8 @@ export const MOCK_STATIONS = [
   {
     name: 'Taunggyi Hilltop Charger',
     address: 'Taunggyi, Shan State',
+    township: 'Taunggyi',
+    operatingHours: { open24h: false, openTime: '08:00', closeTime: '20:00' },
     location: { type: 'Point', coordinates: [97.033, 20.783] },
     connectorTypes: ['Type2'],
     pricePerKwh: 0.33,
@@ -70,6 +86,8 @@ export const MOCK_STATIONS = [
   {
     name: 'Mawlamyine Riverside EV',
     address: 'Mawlamyine, Mon State',
+    township: 'Mawlamyine',
+    operatingHours: { open24h: false, openTime: '06:00', closeTime: '22:00' },
     location: { type: 'Point', coordinates: [97.617, 16.483] },
     connectorTypes: ['CCS'],
     pricePerKwh: 0.34,
@@ -79,6 +97,8 @@ export const MOCK_STATIONS = [
   {
     name: 'Pathein Delta Charge',
     address: 'Pathein, Ayeyarwady Region',
+    township: 'Pathein',
+    operatingHours: { open24h: true },
     location: { type: 'Point', coordinates: [94.733, 16.784] },
     connectorTypes: ['Type2', 'CCS'],
     pricePerKwh: 0.29,

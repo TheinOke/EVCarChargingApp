@@ -6,6 +6,7 @@ const REQUIRED_CAR_FIELDS = [
   'batteryCapacityKwh',
   'currentBatteryPercent',
   'chargingPowerKw',
+  'connectorType',
 ];
 
 function toPublicCar(car) {
@@ -16,6 +17,7 @@ function toPublicCar(car) {
     batteryCapacityKwh: car.batteryCapacityKwh,
     currentBatteryPercent: car.currentBatteryPercent,
     chargingPowerKw: car.chargingPowerKw,
+    connectorType: car.connectorType,
   };
 }
 
@@ -41,6 +43,7 @@ export async function createCar(req, res) {
       batteryCapacityKwh: req.body.batteryCapacityKwh,
       currentBatteryPercent: req.body.currentBatteryPercent,
       chargingPowerKw: req.body.chargingPowerKw,
+      connectorType: req.body.connectorType,
     });
     res.status(201).json({ car: toPublicCar(car) });
   } catch (err) {
