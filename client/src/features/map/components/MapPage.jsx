@@ -1,9 +1,18 @@
+import { useState } from 'react';
 import { useNearbyStations } from '../hooks/useNearbyStations.js';
 import StationMap from './StationMap.jsx';
 import StationList from './StationList.jsx';
 
+const TABS = [
+  { key: 'nearby', label: 'Within 10km' },
+  { key: 'all', label: 'All Stations' },
+];
+
 function MapPage() {
-  const { stations, userCoords, radiusKm, status, error, retry } = useNearbyStations();
+  const { nearbyStations, allStations, userCoords, radiusKm, status, error, retry } = useNearbyStations();
+  const [tab, setTab] = useState('nearby');
+
+  const displayedStations = tab === 'nearby' ? nearbyStations : allStations;
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -27,12 +36,36 @@ function MapPage() {
 
       {status === 'success' && (
         <>
-          <StationMap stations={stations} userCoords={userCoords} radiusKm={radiusKm} />
-          <div className="mt-6">
-            <StationList stations={stations} />
+          <div className="flex gap-2 mb-4">
+            {TABS.map((t) => (
+              <button
+                key={t.key}
+                onClick={() => setTab(t.key)}
+                className={`px-4 py-2 rounded-md text-sm font-medium ${
+                  tab === t.key
+                    ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
+                    : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 shadow'
+                }`}
+              >
+                {t.label} ({t.key === 'nearby' ? nearbyStations.length : allStations.length})
+              </button>
+            ))}
           </div>
-          {stations.length === 0 && (
-            <p className="mt-4 text-gray-500 dark:text-gray-400">No charging stations found nearby.</p>
+
+          <StationMap
+            stations={displayedStations}
+            userCoords={userCoords}
+            radiusKm={radiusKm}
+            zoom={tab === 'nearby' ? 13 : 6}
+            showRadiusCircle={tab === 'nearby'}
+          />
+          <div className="mt-6">
+            <StationList stations={displayedStations} />
+          </div>
+          {displayedStations.length === 0 && (
+            <p className="mt-4 text-gray-500 dark:text-gray-400">
+              {tab === 'nearby' ? 'No charging stations found within 10km.' : 'No charging stations found.'}
+            </p>
           )}
         </>
       )}

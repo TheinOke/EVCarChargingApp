@@ -5,14 +5,18 @@ const DEFAULT_RADIUS_KM = 10;
 export async function getNearbyStations(req, res) {
   const lat = parseFloat(req.query.lat);
   const lng = parseFloat(req.query.lng);
-  const radiusKm = req.query.radiusKm !== undefined ? parseFloat(req.query.radiusKm) : DEFAULT_RADIUS_KM;
+  const all = req.query.all === 'true';
 
   if (Number.isNaN(lat) || Number.isNaN(lng)) {
     return res.status(400).json({ message: 'lat and lng query params are required and must be numbers' });
   }
 
-  if (Number.isNaN(radiusKm) || radiusKm <= 0) {
-    return res.status(400).json({ message: 'radiusKm must be a positive number' });
+  let radiusKm;
+  if (!all) {
+    radiusKm = req.query.radiusKm !== undefined ? parseFloat(req.query.radiusKm) : DEFAULT_RADIUS_KM;
+    if (Number.isNaN(radiusKm) || radiusKm <= 0) {
+      return res.status(400).json({ message: 'radiusKm must be a positive number' });
+    }
   }
 
   try {

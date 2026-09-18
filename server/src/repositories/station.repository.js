@@ -13,14 +13,15 @@ export function findById(id) {
 }
 
 export function findNear({ lat, lng, radiusKm }) {
-  return Station.aggregate([
-    {
-      $geoNear: {
-        near: { type: 'Point', coordinates: [lng, lat] },
-        distanceField: 'distanceMeters',
-        maxDistance: radiusKm * 1000,
-        spherical: true,
-      },
-    },
-  ]);
+  const geoNearStage = {
+    near: { type: 'Point', coordinates: [lng, lat] },
+    distanceField: 'distanceMeters',
+    spherical: true,
+  };
+
+  if (radiusKm !== undefined) {
+    geoNearStage.maxDistance = radiusKm * 1000;
+  }
+
+  return Station.aggregate([{ $geoNear: geoNearStage }]);
 }

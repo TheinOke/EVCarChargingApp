@@ -21,7 +21,9 @@ export function useDashboardData() {
     setError(null);
     try {
       const coords = await getCurrentCoords();
-      const nearbyStations = await stationsApi.findNearby(coords);
+      // Use the nearest station regardless of distance — stations are now spread
+      // across multiple cities, so a fixed radius could miss the closest one.
+      const nearbyStations = await stationsApi.findNearby({ ...coords, all: true });
       if (nearbyStations.length === 0) {
         setEstimate(null);
         setStatus('success');
