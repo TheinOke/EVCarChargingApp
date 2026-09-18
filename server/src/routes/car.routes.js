@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import { requireAuth } from '../middlewares/auth.middleware.js';
-import { getMyCar } from '../controllers/car.controller.js';
+import { listCars, createCar, deleteCar } from '../controllers/car.controller.js';
 
 const router = Router();
 
-router.get('/me', requireAuth, getMyCar);
+router.get('/', requireAuth, listCars);
+router.post('/', requireAuth, createCar);
+router.delete('/:id', requireAuth, deleteCar);
 
 export default router;

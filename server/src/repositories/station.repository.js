@@ -8,6 +8,10 @@ export function insertMany(stations) {
   return Station.insertMany(stations);
 }
 
+export function findById(id) {
+  return Station.findById(id);
+}
+
 export function findNear({ lat, lng, radiusKm }) {
   return Station.aggregate([
     {
